@@ -34,8 +34,35 @@ module ActiveSupport
                 return nil
             end
 
-            def put(key, val, seconds_to_store)
+            def get_multi(keys, raw=false)
+                ret = {}
+                keys.each do |k|
+                    val = get(k)
+                    ret[k] = val unless val.nil?
+                end
+            end
 
+            def get_i(key)
+                val = get(key)
+                return nil if val.nil?
+                return val.to_i
+            end
+
+            def exist?(key)
+                return !get(key).nil?
+            end
+
+            def increment(key, val=1)
+                ret = get(key)
+                if ret.is_a?(Fixnum)
+                    ret += val
+                else
+                    ret = val
+                    put(key, ret)
+                end
+            end
+
+            def put(key, val, seconds_to_store=999999, raw=false)
                 seconds_to_store = seconds_to_store || @default_expires_in
                 #puts 'seconds=' + seconds_to_store.to_s
                 @cache[key] = [Time.now+seconds_to_store, val]

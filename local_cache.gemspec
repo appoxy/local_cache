@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{local_cache}
-  s.version = "1.1.0"
+  s.version = "1.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Travis Reeder"]
-  s.date = %q{2009-06-23}
+  s.date = %q{2009-08-04}
   s.description = %q{Similar to Rails' built in MemoryStore, but adds size limit and expiration.}
   s.email = %q{travis@appoxy.com}
   s.extra_rdoc_files = [
