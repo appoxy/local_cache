@@ -40,6 +40,7 @@ module ActiveSupport
                     val = get(k)
                     ret[k] = val unless val.nil?
                 end
+                ret
             end
 
             def get_i(key)
