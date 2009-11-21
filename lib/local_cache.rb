@@ -18,7 +18,7 @@ class LocalCache < ActiveSupport::Cache::Store
         @cache_list = []
     end
 
-    def get(key)
+    def get(key, options={})
         # if the API URL exists as a key in cache, we just return it
         # we also make sure the data is fresh
         #puts 'looking in cache for: ' + key.to_s
@@ -39,7 +39,7 @@ class LocalCache < ActiveSupport::Cache::Store
         return nil
     end
 
-    def get_multi(keys, raw=false)
+    def get_multi(keys, options={})
         ret = {}
         keys.each do |k|
             val = get(k)
@@ -68,9 +68,8 @@ class LocalCache < ActiveSupport::Cache::Store
         end
     end
 
-    def put(key, val, seconds_to_store=999999, raw=false)
-        seconds_to_store = seconds_to_store || @default_expires_in
-        #puts 'seconds=' + seconds_to_store.to_s
+    def put(key, val, options={})
+        seconds_to_store = options[:expires_in] || options[:ttl] || @default_expires_in
         @cache[key] = [Time.now+seconds_to_store, val]
         @cache_list << key
         while @cache.size > @size && @cache_list.size > 0
@@ -79,26 +78,26 @@ class LocalCache < ActiveSupport::Cache::Store
         end
     end
 
-    def read(name, options = nil)
+    def read(name, options={})
 #        puts 'read from localcache'
         super
-        ret = get(name)
+        ret = get(name, options)
 #        puts 'ret.frozen=' + ret.frozen?.to_s
         return ret
     end
 
-    def write(name, value, options = nil)
+    def write(name, value, options={})
         super
-        put(name, value, options.nil? ? nil : options[:expires_in])
+        put(name, value, options)
 #        puts 'write.frozen=' + value.frozen?.to_s
     end
 
-    def delete(name, options = nil)
+    def delete(name, options={})
         super
         @cache.delete(name)
     end
 
-    def delete_matched(matcher, options = nil)
+    def delete_matched(matcher, options={})
         super
         raise "delete_matched not supported by LocalCache"
     end

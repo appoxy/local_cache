@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{local_cache}
-  s.version = "1.2.0"
+  s.version = "1.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Travis Reeder"]
-  s.date = %q{2009-10-21}
+  s.date = %q{2009-11-20}
   s.description = %q{Similar to Rails' built in MemoryStore, but adds size limit and expiration.}
   s.email = %q{travis@appoxy.com}
   s.extra_rdoc_files = [
@@ -23,6 +23,9 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{Similar to Rails' built in MemoryStore, but adds size limit and expiration.}
+  s.test_files = [
+    "test/local_cache_tests.rb"
+  ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
