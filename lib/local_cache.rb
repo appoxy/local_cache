@@ -80,25 +80,25 @@ class LocalCache < ActiveSupport::Cache::Store
 
     def read(name, options={})
 #        puts 'read from localcache'
-        super
+#        super
         ret = get(name, options)
 #        puts 'ret.frozen=' + ret.frozen?.to_s
         return ret
     end
 
     def write(name, value, options={})
-        super
+#        super
         put(name, value, options)
 #        puts 'write.frozen=' + value.frozen?.to_s
     end
 
     def delete(name, options={})
-        super
+#        super
         @cache.delete(name)
     end
 
     def delete_matched(matcher, options={})
-        super
+#        super
         raise "delete_matched not supported by LocalCache"
     end
 
